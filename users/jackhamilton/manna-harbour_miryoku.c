@@ -89,13 +89,35 @@ bool render_status(void) {
 
     switch (get_highest_layer(layer_state)) {
         case BASE:
-            oled_write_P(PSTR("Default\n"), false);
+            oled_write_P(PSTR("BASE"), false);
+            break;
+        case BUTTON:
+            oled_write_P(PSTR("BUTTON"), false);
+            break;
+        case MEDIA:
+            oled_write_P(PSTR("MEDIA"), false);
+            break;
+        case NAV:
+            oled_write_P(PSTR("NAV"), false);
+            break;
+        case MOUSE:
+            oled_write_P(PSTR("MOUSE"), false);
+            break;
+        case SYM:
+            oled_write_P(PSTR("SYM"), false);
+            break;
+        case NUM:
+            oled_write_P(PSTR("NUM"), false);
+            break;
+        case FUN:
+            oled_write_P(PSTR("FUN"), false);
             break;
         default:
             // Or use the write_ln shortcut over adding '\n' to the end of your string
             oled_write_ln_P(PSTR("Undefined"), false);
     }
 
+    oled_write_P(PSTR("\n\nJACK HAMILTON"), false);
     // Host Keyboard LED Status
     led_t led_state = host_keyboard_led_state();
     oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
