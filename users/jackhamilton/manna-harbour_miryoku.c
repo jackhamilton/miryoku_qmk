@@ -81,19 +81,15 @@ combo_t                key_combos[COMBO_COUNT] = {COMBO(thumbcombos_base_right, 
 #endif
 
 #ifdef OLED_ENABLE
-bool oled_task_user(void) {
+enum layers { BASE, BUTTON, MEDIA, NAV, MOUSE, SYM, NUM, FUN };
+
+bool render_status(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
 
     switch (get_highest_layer(layer_state)) {
-        case _QWERTY:
+        case BASE:
             oled_write_P(PSTR("Default\n"), false);
-            break;
-        case _FN:
-            oled_write_P(PSTR("FN\n"), false);
-            break;
-        case _ADJ:
-            oled_write_P(PSTR("ADJ\n"), false);
             break;
         default:
             // Or use the write_ln shortcut over adding '\n' to the end of your string
@@ -143,11 +139,6 @@ void oled_render_boot(bool bootloader) {
             oled_write_P(PSTR("Rebooting "), false);
         }
     }
-
-    oled_render_dirty(true);
 }
 
-bool shutdown_user(bool jump_to_bootloader) {
-    oled_render_boot(jump_to_bootloader);
-}
 #endif
