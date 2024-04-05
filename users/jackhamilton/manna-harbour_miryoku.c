@@ -114,7 +114,7 @@ bool render_status(void) {
             break;
         default:
             // Or use the write_ln shortcut over adding '\n' to the end of your string
-            oled_write_ln_P(PSTR("Undefined"), false);
+            oled_write_ln_P(PSTR("NONE"), false);
     }
 
     oled_write_P(PSTR("\n\nDriver: Jack Hamilton"), false);
