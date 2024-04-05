@@ -11,6 +11,10 @@ KEY_OVERRIDE_ENABLE = yes
 INTROSPECTION_KEYMAP_C = manna-harbour_miryoku.c # keymaps
 
 BOOTLOADER = caterina
+OLED_ENABLE = yes
+
+OLED_DRIVER = ssd1306
+OLED_TRANSPORT = i2c
 
 include users/manna-harbour_miryoku/custom_rules.mk
 
