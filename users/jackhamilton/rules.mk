@@ -8,12 +8,14 @@ TAP_DANCE_ENABLE = yes
 CAPS_WORD_ENABLE = yes
 KEY_OVERRIDE_ENABLE = yes
 
-INTROSPECTION_KEYMAP_C = manna-harbour_miryoku.c # keymaps
+INTROSPECTION_KEYMAP_C = jack-hamilton_miryoku.c # keymaps
 
 BOOTLOADER = caterina
 OLED_ENABLE = yes
 OLED_TRANSPORT = i2c
 
-include users/manna-harbour_miryoku/custom_rules.mk
+RGBLIGHT_ENABLE = yes
 
-include users/manna-harbour_miryoku/post_rules.mk
+include users/jackhamilton/custom_rules.mk
+
+include users/jackhamilton/post_rules.mk

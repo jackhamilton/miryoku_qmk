@@ -3,9 +3,10 @@
 
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+#include <stdint.h>
 #include QMK_KEYBOARD_H
 
-#include "manna-harbour_miryoku.h"
+#include "jack-hamilton_miryoku.h"
 
 // Additional Features double tap guard
 
@@ -50,6 +51,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 const key_override_t capsword_key_override = ko_make_basic(MOD_MASK_SHIFT, CW_TOGG, KC_CAPS);
 
 const key_override_t **key_overrides = (const key_override_t *[]){&capsword_key_override, NULL};
+
+// perkey hold
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(U_MEDIA, KC_ESC):
+            return true;
+        case LT(U_NAV, KC_SPC):
+            return true;
+        case LT(U_MOUSE, KC_TAB):
+            return true;
+        case LT(U_SYM, KC_ENT):
+            return true;
+        case LT(U_NUM, KC_BSPC):
+            return true;
+        case LT(U_FUN, KC_DEL):
+            return true;
+        default:
+            return false;
+    }
+}
 
 // thumb combos
 
