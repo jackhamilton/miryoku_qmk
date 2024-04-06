@@ -102,7 +102,7 @@ combo_t                key_combos[COMBO_COUNT] = {COMBO(thumbcombos_base_right, 
 #endif
 
 #ifdef OLED_ENABLE
-enum layers { BASE, BUTTON, MEDIA, NAV, MOUSE, SYM, NUM, FUN };
+enum layers { BASE, EXTRA, TAP, BUTTON, NAV, MOUSE, MEDIA, NUM, SYM, FUN };
 
 bool render_status(void) {
     // Host Keyboard Layer Status
@@ -132,6 +132,12 @@ bool render_status(void) {
             break;
         case FUN:
             oled_write_P(PSTR("FUN"), false);
+            break;
+        case TAP:
+            oled_write_P(PSTR("TAP"), false);
+            break;
+        case EXTRA:
+            oled_write_P(PSTR("EXTRA"), false);
             break;
         default:
             // Or use the write_ln shortcut over adding '\n' to the end of your string
