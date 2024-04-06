@@ -53,7 +53,7 @@ const key_override_t capsword_key_override = ko_make_basic(MOD_MASK_SHIFT, CW_TO
 const key_override_t **key_overrides = (const key_override_t *[]){&capsword_key_override, NULL};
 
 // perkey hold
-bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(U_MEDIA, KC_ESC):
             return true;

@@ -17,7 +17,7 @@
 // Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
 // #define QUICK_TAP_TERM 0
 
-#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+#define PERMISSIVE_HOLD_PER_KEY
 
 // Auto Shift
 #define NO_AUTO_SHIFT_ALPHA
