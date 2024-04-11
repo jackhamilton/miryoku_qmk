@@ -20,3 +20,9 @@
 #define MIRYOKU_LAYER_MOUSE TD(U_TD_BOOT), TD(U_TD_U_TAP), TD(U_TD_U_EXTRA), TD(U_TD_U_BASE), U_NA, U_RDO, U_PST, U_CPY, U_CUT, U_UND, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, U_NU, U_NA, KC_ALGR, TD(U_TD_U_SYM), TD(U_TD_U_MOUSE), U_NA, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, U_NU, U_NP, U_NP, U_NA, U_NA, U_NA, KC_BTN2, KC_BTN1, KC_BTN3, U_NP, U_NP
 
 #define MIRYOKU_LAYER_TAP KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_QUOT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, U_NP, U_NP, KC_ESC, KC_SPC, KC_TAB, KC_ENT, KC_BSPC, KC_DEL, U_NP, U_NP
+
+#define MIRYOKU_LAYER_SYM \
+KC_LCBR,           KC_AMPR,           KC_ASTR,           KC_LPRN,           KC_RCBR,           U_NA,              TD(U_TD_U_BASE),   TD(U_TD_U_EXTRA),  TD(U_TD_U_TAP),    TD(U_TD_BOOT),     \
+KC_COLN,           KC_CIRC,            KC_PERC,           KC_DLR,           KC_PLUS,           U_NA,              KC_LSFT,           KC_LCTL,           KC_LALT,           KC_LGUI,           \
+KC_TILD,           KC_EXLM,           KC_AT,             KC_HASH,           KC_PIPE,           U_NA,              TD(U_TD_U_SYM),    TD(U_TD_U_MOUSE),  KC_ALGR,           U_NA,              \
+U_NP,              U_NP,              KC_LPRN,           KC_RPRN,           KC_UNDS,           U_NA,              U_NA,              U_NA,              U_NP,              U_NP
