@@ -84,7 +84,7 @@ bool process_detected_host_os_user(os_variant_t detected_os) {
 #define U_CPY C(KC_INS)
 #define U_CUT S(KC_DEL)
 #define U_UND KC_UNDO
-        case OS_WIN:
+        case OS_WINDOWS:
 #undef U_RDO
 #undef U_PST
 #undef U_CPY
