@@ -116,7 +116,14 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
             return true;
         case LT(U_FUN, KC_DEL):
             return true;
-
+        case LSFT_T(KC_F):
+            return true;
+        case LSFT_T(KC_J):
+            return true;
+        case LSFT_T(KC_S):
+            return true;
+        case LSFT_T(KC_N):
+            return true;
         default:
             return false;
     }
