@@ -52,6 +52,55 @@ const key_override_t capsword_key_override = ko_make_basic(MOD_MASK_SHIFT, CW_TO
 
 const key_override_t **key_overrides = (const key_override_t *[]){&capsword_key_override, NULL};
 
+typedef enum {
+    OS_UNSURE,
+    OS_LINUX,
+    OS_WINDOWS,
+    OS_MACOS,
+    OS_IOS,
+} os_variant_t;
+
+bool process_detected_host_os_user(os_variant_t detected_os) {
+    switch (detected_os) {
+        case OS_MACOS:
+#undef U_RDO
+#undef U_PST
+#undef U_CPY
+#undef U_CUT
+#undef U_UND
+#define U_RDO SCMD(KC_Z)
+#define U_PST LCMD(KC_V)
+#define U_CPY LCMD(KC_C)
+#define U_CUT LCMD(KC_X)
+#define U_UND LCMD(KC_Z)
+        case OS_LINUX:
+#undef U_RDO
+#undef U_PST
+#undef U_CPY
+#undef U_CUT
+#undef U_UND
+#define U_RDO KC_AGIN
+#define U_PST S(KC_INS)
+#define U_CPY C(KC_INS)
+#define U_CUT S(KC_DEL)
+#define U_UND KC_UNDO
+        case OS_WIN:
+#undef U_RDO
+#undef U_PST
+#undef U_CPY
+#undef U_CUT
+#undef U_UND
+#define U_RDO C(KC_Y)
+#define U_PST C(KC_V)
+#define U_CPY C(KC_C)
+#define U_CUT C(KC_X)
+#define U_UND C(KC_Z)
+        default:
+            break;
+    }
+    return true;
+}
+
 // perkey hold
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -67,6 +116,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
             return true;
         case LT(U_FUN, KC_DEL):
             return true;
+
         default:
             return false;
     }

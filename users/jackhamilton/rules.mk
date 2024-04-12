@@ -7,6 +7,7 @@ AUTO_SHIFT_ENABLE = yes
 TAP_DANCE_ENABLE = yes
 CAPS_WORD_ENABLE = yes
 KEY_OVERRIDE_ENABLE = yes
+OS_DETECTION_ENABLE = yes
 
 INTROSPECTION_KEYMAP_C = jack-hamilton_miryoku.c # keymaps
 
