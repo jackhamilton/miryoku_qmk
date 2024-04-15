@@ -45,6 +45,7 @@
 #undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX 64
 
+#define MIRYOKU_CLIPBOARD_WIN
 // Thumb Combos
 #if defined(MIRYOKU_KLUDGE_THUMBCOMBOS)
 #    define COMBO_COUNT 8

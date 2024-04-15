@@ -42,6 +42,12 @@ enum miryoku_layers {
 #    define U_CPY C(KC_C)
 #    define U_CUT C(KC_X)
 #    define U_UND C(KC_Z)
+#elif defined(MIRYOKU_CLIPBOARD_HYBRID)
+#    define U_RDO RCS(KC_Y)
+#    define U_PST RCS(KC_V)
+#    define U_CPY RCS(KC_C)
+#    define U_CUT RCS(KC_X)
+#    define U_UND RCS(KC_Z)
 #else
 #    define U_RDO KC_AGIN
 #    define U_PST S(KC_INS)
