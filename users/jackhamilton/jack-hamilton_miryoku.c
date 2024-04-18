@@ -4,12 +4,16 @@
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdint.h>
+#include "features/achordion.h"
 #include QMK_KEYBOARD_H
+
+#ifdef OS_DETECTION_ENABLE
+  #include "os_detection.h"
+#endif
 
 #include "jack-hamilton_miryoku.h"
 
-// Additional Features double tap guard
-
+// -- MANNA HARBOUR MIRYOKU
 enum {
     U_TD_BOOT,
 #define MIRYOKU_X(LAYER, STRING) U_TD_U_##LAYER,
@@ -52,56 +56,98 @@ const key_override_t capsword_key_override = ko_make_basic(MOD_MASK_SHIFT, CW_TO
 
 const key_override_t **key_overrides = (const key_override_t *[]){&capsword_key_override, NULL};
 
-typedef enum {
-    OS_UNSURE,
-    OS_LINUX,
-    OS_WINDOWS,
-    OS_MACOS,
-    OS_IOS,
-} os_variant_t;
+// JACK HAMILTON CUSTOMIZATION LAYER
+// perkey hold
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_achordion(keycode, record)) {
+        return false;
+    }
 
-bool process_detected_host_os_user(os_variant_t detected_os) {
-    switch (detected_os) {
-        case OS_MACOS:
-#undef U_RDO
-#undef U_PST
-#undef U_CPY
-#undef U_CUT
-#undef U_UND
-#define U_RDO SCMD(KC_Z)
-#define U_PST LCMD(KC_V)
-#define U_CPY LCMD(KC_C)
-#define U_CUT LCMD(KC_X)
-#define U_UND LCMD(KC_Z)
-        case OS_LINUX:
-#undef U_RDO
-#undef U_PST
-#undef U_CPY
-#undef U_CUT
-#undef U_UND
-#define U_RDO KC_AGIN
-#define U_PST S(KC_INS)
-#define U_CPY C(KC_INS)
-#define U_CUT S(KC_DEL)
-#define U_UND KC_UNDO
-        case OS_WINDOWS:
-#undef U_RDO
-#undef U_PST
-#undef U_CPY
-#undef U_CUT
-#undef U_UND
-#define U_RDO C(KC_Y)
-#define U_PST C(KC_V)
-#define U_CPY C(KC_C)
-#define U_CUT C(KC_X)
-#define U_UND C(KC_Z)
-        default:
-            break;
+    switch (keycode) {
+    case KC_AGIN:
+        if (record->event.pressed) {
+            os_variant_t detected_os = detected_host_os();
+            switch (detected_os) {
+                case OS_MACOS:
+                case OS_IOS:
+                    SEND_STRING(SS_LCMD("z")); // selects all and copies
+                    break;
+                case OS_WINDOWS:
+                case OS_LINUX:
+                case OS_UNSURE:
+                    SEND_STRING(SS_LCTL("y"));
+                    break;
+            }
+        }
+        break;
+    case KC_PSTE:
+        if (record->event.pressed) {
+            os_variant_t detected_os = detected_host_os();
+            switch (detected_os) {
+                case OS_MACOS:
+                case OS_IOS:
+                    SEND_STRING(SS_LCMD("v")); // selects all and copies
+                    break;
+                case OS_WINDOWS:
+                case OS_LINUX:
+                case OS_UNSURE:
+                    SEND_STRING(SS_LCTL("v"));
+                    break;
+            }
+        }
+        break;
+    case KC_COPY:
+        if (record->event.pressed) {
+            os_variant_t detected_os = detected_host_os();
+            switch (detected_os) {
+                case OS_MACOS:
+                case OS_IOS:
+                    SEND_STRING(SS_LCMD("c")); // selects all and copies
+                    break;
+                case OS_WINDOWS:
+                case OS_LINUX:
+                case OS_UNSURE:
+                    SEND_STRING(SS_LCTL("c"));
+                    break;
+            }
+        }
+        break;
+    case KC_CUT:
+        if (record->event.pressed) {
+            os_variant_t detected_os = detected_host_os();
+            switch (detected_os) {
+                case OS_MACOS:
+                case OS_IOS:
+                    SEND_STRING(SS_LCMD("x")); // selects all and copies
+                    break;
+                case OS_WINDOWS:
+                case OS_LINUX:
+                case OS_UNSURE:
+                    SEND_STRING(SS_LCTL("x"));
+                    break;
+            }
+        }
+        break;
+    case KC_UNDO:
+        if (record->event.pressed) {
+            os_variant_t detected_os = detected_host_os();
+            switch (detected_os) {
+                case OS_MACOS:
+                case OS_IOS:
+                    SEND_STRING(SS_LCMD("z")); // selects all and copies
+                    break;
+                case OS_WINDOWS:
+                case OS_LINUX:
+                case OS_UNSURE:
+                    SEND_STRING(SS_LCTL("z"));
+                    break;
+            }
+        }
+        break;
     }
     return true;
-}
+};
 
-// perkey hold
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(U_MEDIA, KC_ESC):
@@ -129,34 +175,52 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// thumb combos
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t* record) {
+  // If you quickly hold a tap-hold key after tapping it, the tap action is
+  // repeated. Key repeating is useful e.g. for Vim navigation keys, but can
+  // lead to missed triggers in fast typing. Here, returning 0 means we
+  // instead want to "force hold" and disable key repeating.
+  switch (keycode) {
+    case KC_TAB:
+    case KC_SPACE:
+      return QUICK_TAP_TERM;  // Enable key repeating.
+    default:
+      return 0;  // Otherwise, force hold and disable key repeating.
+  }
+}
 
-#if defined(MIRYOKU_KLUDGE_THUMBCOMBOS)
-const uint16_t PROGMEM thumbcombos_base_right[] = {LT(U_SYM, KC_ENT), LT(U_NUM, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM thumbcombos_base_left[]  = {LT(U_NAV, KC_SPC), LT(U_MOUSE, KC_TAB), COMBO_END};
-const uint16_t PROGMEM thumbcombos_nav[]        = {KC_ENT, KC_BSPC, COMBO_END};
-const uint16_t PROGMEM thumbcombos_mouse[]      = {KC_BTN2, KC_BTN1, COMBO_END};
-const uint16_t PROGMEM thumbcombos_media[]      = {KC_MSTP, KC_MPLY, COMBO_END};
-const uint16_t PROGMEM thumbcombos_num[]        = {KC_0, KC_MINS, COMBO_END};
-#    if defined(MIRYOKU_LAYERS_FLIP)
-const uint16_t PROGMEM thumbcombos_sym[] = {KC_UNDS, KC_LPRN, COMBO_END};
-#    else
-const uint16_t PROGMEM thumbcombos_sym[] = {KC_RPRN, KC_UNDS, COMBO_END};
-#    endif
-const uint16_t PROGMEM thumbcombos_fun[]       = {KC_SPC, KC_TAB, COMBO_END};
-combo_t                key_combos[COMBO_COUNT] = {COMBO(thumbcombos_base_right, LT(U_FUN, KC_DEL)),
-                                                  COMBO(thumbcombos_base_left, LT(U_MEDIA, KC_ESC)),
-                                                  COMBO(thumbcombos_nav, KC_DEL),
-                                                  COMBO(thumbcombos_mouse, KC_BTN3),
-                                                  COMBO(thumbcombos_media, KC_MUTE),
-                                                  COMBO(thumbcombos_num, KC_DOT),
-#    if defined(MIRYOKU_LAYERS_FLIP)
-                                   COMBO(thumbcombos_sym, KC_RPRN),
-#    else
-                                   COMBO(thumbcombos_sym, KC_LPRN),
-#    endif
-                                                  COMBO(thumbcombos_fun, KC_APP)};
-#endif
+void matrix_scan_user(void) {
+    achordion_task();
+}
+
+bool achordion_chord(uint16_t tap_hold_keycode,
+                     keyrecord_t* tap_hold_record,
+                     uint16_t other_keycode,
+                     keyrecord_t* other_record) {
+    if (other_record->event.key.row % (MATRIX_ROWS / 2) >= 3) {
+        return true;
+    }
+
+    return achordion_opposite_hands(tap_hold_record, other_record);
+}
+
+// bool process_detected_host_os_user(os_variant_t detected_os) {
+//     extern keymap_config_t keymap_config;
+//     switch (detected_os) {
+//         case OS_MACOS:
+//         case OS_IOS:
+//             keymap_config.swap_lctl_lgui = true;
+//             break;
+//         case OS_WINDOWS:
+//             break;
+//         case OS_LINUX:
+//             break;
+//         case OS_UNSURE:
+//             break;
+//     }
+//
+//     return true;
+// }
 
 #ifdef OLED_ENABLE
 enum layers { BASE, EXTRA, TAP, BUTTON, NAV, MOUSE, MEDIA, NUM, SYM, FUN };
@@ -201,7 +265,24 @@ bool render_status(void) {
             oled_write_P(PSTR("NONE"), false);
     }
 
-    oled_write_P(PSTR("\n\nDriver: Jack Hamilton"), false);
+    os_variant_t detected_os = detected_host_os();
+    switch (detected_os) {
+        case OS_MACOS:
+        case OS_IOS:
+            oled_write_P(PSTR("\nMacOS Bindings"), false);
+            break;
+        case OS_WINDOWS:
+            oled_write_P(PSTR("\nWindows Bindings"), false);
+            break;
+        case OS_LINUX:
+            oled_write_P(PSTR("\nLinux Bindings"), false);
+            break;
+        case OS_UNSURE:
+            oled_write_P(PSTR("\nDefault Bindings"), false);
+            break;
+    }
+
+    oled_write_P(PSTR("\nDriver: Jack Hamilton"), false);
     // Host Keyboard LED Status
     led_t led_state = host_keyboard_led_state();
     oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);

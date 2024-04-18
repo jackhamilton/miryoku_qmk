@@ -1,5 +1,6 @@
 # Copyright 2019 Manna Harbour
 # https://github.com/manna-harbour/miryoku
+SRC += features/achordion.c
 
 MOUSEKEY_ENABLE = yes
 EXTRAKEY_ENABLE = yes
@@ -20,5 +21,4 @@ OLED_TRANSPORT = i2c
 RGBLIGHT_ENABLE = yes
 
 include users/jackhamilton/custom_rules.mk
-
 include users/jackhamilton/post_rules.mk
