@@ -57,93 +57,43 @@ const key_override_t capsword_key_override = ko_make_basic(MOD_MASK_SHIFT, CW_TO
 const key_override_t **key_overrides = (const key_override_t *[]){&capsword_key_override, NULL};
 
 // JACK HAMILTON CUSTOMIZATION LAYER
-// perkey hold
+struct os_keybind {
+    int keycode;
+    char* macBind;
+    char* normalBind;
+};
+
+const struct os_keybind keybinds[] = {
+    { KC_AGIN, SS_LCMD("y"), SS_LCTL("y") },
+    { KC_PSTE, SS_LCMD("v"), SS_LCTL("v") },
+    { KC_COPY, SS_LCMD("c"), SS_LCTL("c") },
+    { KC_CUT,  SS_LCMD("x"), SS_LCTL("x") },
+    { KC_UNDO, SS_LCMD("z"), SS_LCTL("z") }
+};
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_achordion(keycode, record)) {
         return false;
     }
-
-    switch (keycode) {
-    case KC_AGIN:
-        if (record->event.pressed) {
-            os_variant_t detected_os = detected_host_os();
-            switch (detected_os) {
-                case OS_MACOS:
-                case OS_IOS:
-                    SEND_STRING(SS_LCMD("z")); // selects all and copies
-                    break;
-                case OS_WINDOWS:
-                case OS_LINUX:
-                case OS_UNSURE:
-                    SEND_STRING(SS_LCTL("y"));
-                    break;
+    os_variant_t detected_os = detected_host_os();
+    size_t size = sizeof(keybinds) / sizeof(keybinds[0]);
+    for (int i = 0; i < size; i += 1) {
+        struct os_keybind current = keybinds[i];
+        if (keycode == current.keycode) {
+            if (record->event.pressed) {
+                switch (detected_os) {
+                    case OS_MACOS:
+                    case OS_IOS:
+                        send_string(current.macBind); // selects all and copies
+                        break;
+                    case OS_WINDOWS:
+                    case OS_LINUX:
+                    case OS_UNSURE:
+                        send_string(current.normalBind);
+                        break;
+                }
             }
         }
-        break;
-    case KC_PSTE:
-        if (record->event.pressed) {
-            os_variant_t detected_os = detected_host_os();
-            switch (detected_os) {
-                case OS_MACOS:
-                case OS_IOS:
-                    SEND_STRING(SS_LCMD("v")); // selects all and copies
-                    break;
-                case OS_WINDOWS:
-                case OS_LINUX:
-                case OS_UNSURE:
-                    SEND_STRING(SS_LCTL("v"));
-                    break;
-            }
-        }
-        break;
-    case KC_COPY:
-        if (record->event.pressed) {
-            os_variant_t detected_os = detected_host_os();
-            switch (detected_os) {
-                case OS_MACOS:
-                case OS_IOS:
-                    SEND_STRING(SS_LCMD("c")); // selects all and copies
-                    break;
-                case OS_WINDOWS:
-                case OS_LINUX:
-                case OS_UNSURE:
-                    SEND_STRING(SS_LCTL("c"));
-                    break;
-            }
-        }
-        break;
-    case KC_CUT:
-        if (record->event.pressed) {
-            os_variant_t detected_os = detected_host_os();
-            switch (detected_os) {
-                case OS_MACOS:
-                case OS_IOS:
-                    SEND_STRING(SS_LCMD("x")); // selects all and copies
-                    break;
-                case OS_WINDOWS:
-                case OS_LINUX:
-                case OS_UNSURE:
-                    SEND_STRING(SS_LCTL("x"));
-                    break;
-            }
-        }
-        break;
-    case KC_UNDO:
-        if (record->event.pressed) {
-            os_variant_t detected_os = detected_host_os();
-            switch (detected_os) {
-                case OS_MACOS:
-                case OS_IOS:
-                    SEND_STRING(SS_LCMD("z")); // selects all and copies
-                    break;
-                case OS_WINDOWS:
-                case OS_LINUX:
-                case OS_UNSURE:
-                    SEND_STRING(SS_LCTL("z"));
-                    break;
-            }
-        }
-        break;
     }
     return true;
 };
