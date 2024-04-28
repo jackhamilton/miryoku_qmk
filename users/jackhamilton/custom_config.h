@@ -14,11 +14,18 @@
       N30,  N31,  K32,  K33,  K34,         K35,  K36,  K37,  N38,  N39 \
 ) \
 LAYOUT_split_3x6_3( \
-KC_1,  K00,  K01,  K02,  K03,  K04,         K05,  K06,  K07,  K08,  K09,  XXX, \
-KC_2,  K10,  K11,  K12,  K13,  K14,         K15,  K16,  K17,  K18,  K19,  XXX, \
-KC_3,  K20,  K21,  K22,  K23,  K24,         K25,  K26,  K27,  K28,  K29,  XXX , \
-                   K32,  K33,  K34,         K35,  K36,  K37 \
+K40,  K00,  K01,  K02,  K03,  K04,         K05,  K06,  K07,  K08,  K09,  K43, \
+K41,  K10,  K11,  K12,  K13,  K14,         K15,  K16,  K17,  K18,  K19,  K44, \
+K42,  K20,  K21,  K22,  K23,  K24,         K25,  K26,  K27,  K28,  K29,  K45, \
+                  K32,  K33,  K34,         K35,  K36,  K37 \
 )
+
+#define K40 LSFT_T(KC_TAB)
+#define K41 KC_TAB
+#define K42 KC_CAPS
+#define K43 KC_LNG1
+#define K44 KC_LNG2
+#define K45 KC_LNG3
 
 #define MIRYOKU_LAYER_EXTRA \
 KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,              KC_I,              KC_O,              KC_P,              \
@@ -58,6 +65,6 @@ U_NP,              U_NP,              LT(U_NUM,KC_ESC),  LT(U_FUN,KC_SPC),  KC_T
 
 #define MIRYOKU_LAYER_SYM \
 KC_LCBR,           KC_AMPR,           KC_ASTR,           KC_LPRN,           KC_RCBR,           U_NA,              TD(U_TD_U_BASE),   TD(U_TD_U_EXTRA),  TD(U_TD_U_TAP),    TD(U_TD_BOOT),     \
-KC_COLN,           KC_CIRC,            KC_PERC,           KC_DLR,           KC_PLUS,           U_NA,              KC_LSFT,           KC_LCTL,           KC_LALT,           KC_LGUI,           \
+KC_COLN,           KC_CIRC,           KC_PERC,           KC_DLR,            KC_PLUS,           U_NA,              KC_LSFT,           KC_LCTL,           KC_LALT,           KC_LGUI,           \
 KC_TILD,           KC_EXLM,           KC_AT,             KC_HASH,           KC_PIPE,           U_NA,              TD(U_TD_U_SYM),    TD(U_TD_U_MOUSE),  KC_ALGR,           U_NA,              \
 U_NP,              U_NP,              KC_LPRN,           KC_RPRN,           KC_UNDS,           U_NA,              U_NA,              U_NA,              U_NP,              U_NP

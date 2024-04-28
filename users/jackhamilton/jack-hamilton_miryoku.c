@@ -102,30 +102,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(U_MEDIA, KC_ESC):
-            return true;
-        case LT(U_NAV, KC_SPC):
-            return true;
-        case LT(U_MOUSE, KC_TAB):
-            return true;
-        case LT(U_SYM, KC_ENT):
-            return true;
-        case LT(U_NUM, KC_BSPC):
-            return true;
-        case LT(U_FUN, KC_DEL):
-            return true;
+        case LGUI_T(KC_A):
+        case LALT_T(KC_S):
+        case LCTL_T(KC_D):
         case LSFT_T(KC_F):
-            return true;
         case LSFT_T(KC_J):
-            return true;
-        case LSFT_T(KC_S):
-            return true;
-        case LSFT_T(KC_N):
+        case LCTL_T(KC_K):
+        case LALT_T(KC_L):
+        case LGUI_T(KC_QUOT):
             return true;
         default:
             return false;
     }
 }
+
+// bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         case LT(U_MEDIA, KC_ESC):
+//         case LT(U_NAV, KC_SPC):
+//         case LT(U_MOUSE, KC_TAB):
+//         case LT(U_SYM, KC_ENT):
+//         case LT(U_NUM, KC_BSPC):
+//         case LT(U_FUN, KC_DEL):
+//         case KC_LSFT:
+//             return true;
+//         default:
+//             return false;
+//     }
+// }
 
 uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t* record) {
   // If you quickly hold a tap-hold key after tapping it, the tap action is
