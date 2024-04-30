@@ -2,9 +2,9 @@
 # https://github.com/manna-harbour/miryoku
 SRC += features/achordion.c
 
-MOUSEKEY_ENABLE = yes
+MOUSEKEY_ENABLE = no
 EXTRAKEY_ENABLE = yes
-AUTO_SHIFT_ENABLE = yes
+AUTO_SHIFT_ENABLE = no
 TAP_DANCE_ENABLE = yes
 CAPS_WORD_ENABLE = yes
 KEY_OVERRIDE_ENABLE = yes

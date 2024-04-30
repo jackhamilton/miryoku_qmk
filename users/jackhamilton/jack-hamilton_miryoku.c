@@ -28,10 +28,13 @@ void u_td_fn_boot(tap_dance_state_t *state, void *user_data) {
     }
 }
 
+layer_state_t tapDanceLayer = (layer_state_t)1;
+
 #define MIRYOKU_X(LAYER, STRING)                                        \
     void u_td_fn_U_##LAYER(tap_dance_state_t *state, void *user_data) { \
         if (state->count == 2) {                                        \
-            default_layer_set((layer_state_t)1 << U_##LAYER);           \
+            tapDanceLayer = (layer_state_t)1 << U_##LAYER;              \
+            default_layer_set(tapDanceLayer);                           \
         }                                                               \
     }
 MIRYOKU_LAYER_LIST
@@ -58,6 +61,32 @@ const key_override_t capsword_key_override = ko_make_basic(MOD_MASK_SHIFT, CW_TO
 const key_override_t **key_overrides = (const key_override_t *[]){&capsword_key_override, NULL};
 
 // JACK HAMILTON CUSTOMIZATION LAYER
+//const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+//    {19, 3, HSV_RED},       // Light 4 LEDs, starting with LED 6
+//    {40, 3, HSV_RED}       // Light 4 LEDs, starting with LED 12
+//);
+//// Light LEDs 9 & 10 in cyan when keyboard layer 1 is active
+//const rgblight_segment_t PROGMEM my_colemak_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+//    {1, 18, HSV_CYAN},
+//    {22, 18, HSV_CYAN}
+//);
+//// Light LEDs 11 & 12 in purple when keyboard layer 2 is active
+//const rgblight_segment_t PROGMEM my_qwerty_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+//    {1, 18, HSV_YELLOW},
+//    {22, 18, HSV_YELLOW}
+//);
+//
+//const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+//    my_capslock_layer,
+//    my_colemak_layer,    // Overrides caps lock layer
+//    my_qwerty_layer    // Overrides other layers
+//);
+//
+//void keyboard_post_init_user(void) {
+//    // Enable the LED layers
+//    rgblight_layers = my_rgb_layers;
+//}
+
 struct os_keybind {
     int keycode;
     char* macBind;
@@ -116,34 +145,19 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
-//     switch (keycode) {
-//         case LT(U_MEDIA, KC_ESC):
-//         case LT(U_NAV, KC_SPC):
-//         case LT(U_MOUSE, KC_TAB):
-//         case LT(U_SYM, KC_ENT):
-//         case LT(U_NUM, KC_BSPC):
-//         case LT(U_FUN, KC_DEL):
-//         case KC_LSFT:
-//             return true;
-//         default:
-//             return false;
-//     }
-// }
-
-uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t* record) {
-  // If you quickly hold a tap-hold key after tapping it, the tap action is
-  // repeated. Key repeating is useful e.g. for Vim navigation keys, but can
-  // lead to missed triggers in fast typing. Here, returning 0 means we
-  // instead want to "force hold" and disable key repeating.
-  switch (keycode) {
-    case KC_TAB:
-    case KC_SPACE:
-      return QUICK_TAP_TERM;  // Enable key repeating.
-    default:
-      return 0;  // Otherwise, force hold and disable key repeating.
-  }
-}
+//uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t* record) {
+//  // If you quickly hold a tap-hold key after tapping it, the tap action is
+//  // repeated. Key repeating is useful e.g. for Vim navigation keys, but can
+//  // lead to missed triggers in fast typing. Here, returning 0 means we
+//  // instead want to "force hold" and disable key repeating.
+//  switch (keycode) {
+//    case LT(U_MOUSE,KC_TAB):
+//    case LT(U_NAV,KC_SPACE):
+//      return QUICK_TAP_TERM;  // Enable key repeating.
+//    default:
+//      return 0;  // Otherwise, force hold and disable key repeating.
+//  }
+//}
 
 void matrix_scan_user(void) {
     achordion_task();
@@ -160,37 +174,72 @@ bool achordion_chord(uint16_t tap_hold_keycode,
     return achordion_opposite_hands(tap_hold_record, other_record);
 }
 
-// bool process_detected_host_os_user(os_variant_t detected_os) {
-//     extern keymap_config_t keymap_config;
-//     switch (detected_os) {
-//         case OS_MACOS:
-//         case OS_IOS:
-//             keymap_config.swap_lctl_lgui = true;
-//             break;
-//         case OS_WINDOWS:
-//             break;
-//         case OS_LINUX:
-//             break;
-//         case OS_UNSURE:
-//             break;
-//     }
-//
-//     return true;
-// }
+enum layers { BASE, EXTRA, TAP, BUTTON, NAV, /* MOUSE, */MEDIA, NUM, SYM, FUN };
+
+#define COLEMAK 1
+#define QWERTY 2
+#define GAMING 4
+void update_layer_led(void) {
+    led_t led_state = host_keyboard_led_state();
+    if (!led_state.caps_lock && !is_caps_word_on()) {
+        switch (tapDanceLayer) {
+            case COLEMAK:
+                //rgblight_setrgb(RGB_CYAN);
+                break;
+            case QWERTY:
+                //rgblight_setrgb(RGB_YELLOW);
+                break;
+            case GAMING:
+                //rgblight_setrgb(RGB_GREEN);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+void caps_word_set_user(bool active) {
+    if (active) {
+        //rgblight_setrgb(RGB_RED);
+    } else {
+        update_layer_led();
+    }
+}
+
+bool led_update_user(led_t led_state) {
+    if (led_state.caps_lock) {
+        //rgblight_setrgb(RGB_RED);
+    } else {
+        update_layer_led();
+    }
+    return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    update_layer_led();
+    return state;
+}
 
 #ifdef OLED_ENABLE
-enum layers { BASE, EXTRA, TAP, BUTTON, NAV, MOUSE, MEDIA, NUM, SYM, FUN };
-
 bool render_status(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
 
     switch (get_highest_layer(layer_state)) {
         case BASE:
-            oled_write_P(PSTR("BASE"), false);
-            break;
-        case BUTTON:
-            oled_write_P(PSTR("BUTTON"), false);
+            switch (tapDanceLayer) {
+                case COLEMAK:
+                    oled_write_P(PSTR("COLEMAK"), false);
+                    break;
+                case QWERTY:
+                    oled_write_P(PSTR("QWERTY"), false);
+                    break;
+                case GAMING:
+                    oled_write_P(PSTR("GAMING"), false);
+                    break;
+                default:
+                    break;
+            }
             break;
         case MEDIA:
             oled_write_P(PSTR("MEDIA"), false);
@@ -198,9 +247,9 @@ bool render_status(void) {
         case NAV:
             oled_write_P(PSTR("NAV"), false);
             break;
-        case MOUSE:
-            oled_write_P(PSTR("MOUSE"), false);
-            break;
+//         case MOUSE:
+//             oled_write_P(PSTR("MOUSE"), false);
+//             break;
         case SYM:
             oled_write_P(PSTR("SYM"), false);
             break;
@@ -210,15 +259,13 @@ bool render_status(void) {
         case FUN:
             oled_write_P(PSTR("FUN"), false);
             break;
-        case TAP:
-            oled_write_P(PSTR("TAP"), false);
-            break;
-        case EXTRA:
-            oled_write_P(PSTR("EXTRA"), false);
-            break;
         default:
-            // Or use the write_ln shortcut over adding '\n' to the end of your string
-            oled_write_P(PSTR("NONE"), false);
+        {
+            char str[8];
+            sprintf(str, "%d:%d", tapDanceLayer, get_highest_layer(layer_state));
+            oled_write(str, false);
+        }
+            break;
     }
 
     os_variant_t detected_os = detected_host_os();
@@ -242,10 +289,10 @@ bool render_status(void) {
     // Host Keyboard LED Status
     led_t led_state = host_keyboard_led_state();
     oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
-    oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
+    oled_write_P(led_state.caps_lock || is_caps_word_on() ? PSTR("CAP ") : PSTR("    "), false);
     oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
 
-    return false;
+return false;
 }
 
 static void render_logo(void) {
