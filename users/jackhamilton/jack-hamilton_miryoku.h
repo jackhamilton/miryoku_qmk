@@ -24,6 +24,27 @@ enum miryoku_layers {
 #define U_NA KC_NO // present but not available for use
 #define U_NU KC_NO // available but not used
 
+#define HSV_DIM_AZURE       132, 102, 120
+#define HSV_DIM_BLACK         0,   0,   0
+#define HSV_DIM_BLUE        170, 255, 120
+#define HSV_DIM_CHARTREUSE   64, 255, 120
+#define HSV_DIM_CORAL        11, 176, 120
+#define HSV_DIM_CYAN        128, 255, 120
+#define HSV_DIM_GOLD         36, 255, 120
+#define HSV_DIM_GOLDENROD    30, 218, 120
+#define HSV_DIM_GREEN        85, 255, 120
+#define HSV_DIM_MAGENTA     213, 255, 120
+#define HSV_DIM_ORANGE       21, 255, 120
+#define HSV_DIM_PINK        234, 128, 120
+#define HSV_DIM_PURPLE      191, 255, 120
+#define HSV_DIM_RED           0, 255, 120
+#define HSV_DIM_SPRINGGREEN 106, 255, 120
+#define HSV_DIM_TEAL        128, 255, 68
+#define HSV_DIM_TURQUOISE   123,  90, 64
+#define HSV_DIM_WHITE         0,   0, 120
+#define HSV_DIM_YELLOW       43, 255, 120
+#define HSV_DIM_OFF         HSV_BLACK
+
 #if defined(MIRYOKU_CLIPBOARD_FUN)
 #    define U_RDO KC_AGIN
 #    define U_PST KC_PSTE

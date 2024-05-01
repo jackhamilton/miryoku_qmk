@@ -182,25 +182,45 @@ enum layers { BASE, EXTRA, TAP, BUTTON, NAV, /* MOUSE, */MEDIA, NUM, SYM, FUN };
 void update_layer_led(void) {
     led_t led_state = host_keyboard_led_state();
     if (!led_state.caps_lock && !is_caps_word_on()) {
-        switch (tapDanceLayer) {
-            case COLEMAK:
-                //rgblight_setrgb(RGB_CYAN);
+        switch (get_highest_layer(layer_state)) {
+            case MEDIA:
+                rgblight_sethsv(HSV_DIM_WHITE);
+                rgblight_sethsv_range(HSV_DIM_CYAN, 0, 26);
                 break;
-            case QWERTY:
-                //rgblight_setrgb(RGB_YELLOW);
+            case NAV:
+                rgblight_sethsv(HSV_DIM_PURPLE);
+                rgblight_sethsv_range(HSV_DIM_CYAN, 0, 26);
                 break;
-            case GAMING:
-                //rgblight_setrgb(RGB_GREEN);
+            case SYM:
+                rgblight_sethsv_range(HSV_DIM_PURPLE, 0, 26);
+                break;
+            case NUM:
+                rgblight_sethsv_range(HSV_DIM_PINK, 0, 26);
+                break;
+            case FUN:
+                rgblight_sethsv_range(HSV_DIM_WHITE, 0, 26);
                 break;
             default:
-                break;
+                switch (tapDanceLayer) {
+                    case COLEMAK:
+                        rgblight_sethsv(HSV_DIM_CYAN);
+                        break;
+                    case QWERTY:
+                        rgblight_sethsv(HSV_DIM_YELLOW);
+                        break;
+                    case GAMING:
+                        rgblight_sethsv(HSV_DIM_GREEN);
+                        break;
+                    default:
+                        break;
+                }
         }
     }
 }
 
 void caps_word_set_user(bool active) {
     if (active) {
-        //rgblight_setrgb(RGB_RED);
+        rgblight_sethsv(HSV_DIM_RED);
     } else {
         update_layer_led();
     }
@@ -208,7 +228,7 @@ void caps_word_set_user(bool active) {
 
 bool led_update_user(led_t led_state) {
     if (led_state.caps_lock) {
-        //rgblight_setrgb(RGB_RED);
+        rgblight_sethsv(HSV_DIM_RED);
     } else {
         update_layer_led();
     }
