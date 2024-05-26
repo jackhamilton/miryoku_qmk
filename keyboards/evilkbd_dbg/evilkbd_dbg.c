@@ -20,6 +20,8 @@ const keypos_t PROGMEM hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
 
 void keyboard_post_init_user(void) {
     debug_enable = true;
+    debug_matrix = true;
+    debug_keyboard = true;
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -29,3 +31,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
   return true;
 }
+
+// void i2c_init(void) {
+//     gpio_set_pin_input(GP28);
+//     gpio_set_pin_input(GP29);
+//     wait_ms(10);
+//
+//     palSetPadMode(GPIO, 28, PAL_MODE_ALTERNATE(4) | PAL_STM32_OTYPE_OPENDRAIN | PAL_STM32_PUPDR_PULLUP); // Set B6 to I2C function
+//     palSetPadMode(GPIO, 29, PAL_MODE_ALTERNATE(4) | PAL_STM32_OTYPE_OPENDRAIN | PAL_STM32_PUPDR_PULLUP); // Set B7 to I2C function
+// }
