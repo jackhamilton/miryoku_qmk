@@ -18,14 +18,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-
 #define MATRIX_ROW_PINS \
-    { D4, C6, D7, E6 }
+    { GP12, GP13, GP14, GP15 }
 
 // wiring of each half
 #define MATRIX_COL_PINS \
-    { F4, F5, F6, F7, B1, B3 }
+    { GP2, GP3, GP4, GP5, GP6, GP7 }
 // #define MATRIX_COL_PINS { B2, B3, B1, F7, F6, F5, F4 } //uncomment this line and comment line above if you need to reverse left-to-right key order
+#define RGB_DI_PIN GP1
+
+#define SERIAL_USART_FULL_DUPLEX
+#define SERIAL_USART_TX_PIN GP23
+#define SERIAL_USART_RX_PIN GP20
+
+#ifdef RGBLIGHT_ENABLE
+#    define RGBLED_NUM 54 // Number of LEDs
+#    define RGBLED_SPLIT \
+        { 27, 27 }
+#    define RGBLIGHT_SPLIT
+#endif
+
+#ifdef RGB_MATRIX_ENABLE
+#    define RGBLED_NUM       54 // Number of LEDs
+#    define RGB_MATRIX_LED_COUNT RGBLED_NUM
+#    define RGB_MATRIX_SPLIT \
+        { 27, 27 }
+#    define SPLIT_TRANSPORT_MIRROR
+#endif
+
+#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
+
+#define DIODE_DIRECTION COL2ROW
 
 /*
  * Feature disable options
