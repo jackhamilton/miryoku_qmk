@@ -24,7 +24,7 @@
         "vid": "0xFEED"
     },
     "layouts": {
-        "LAYOUT_ortho_4x6": {
+        "LAYOUT_ortho_3x6": {
             "layout": [
                 {"matrix": [0, 0], "x": 0, "y": 0},
                 {"matrix": [0, 1], "x": 1, "y": 0},
@@ -43,13 +43,7 @@
                 {"matrix": [2, 2], "x": 2, "y": 2},
                 {"matrix": [2, 3], "x": 3, "y": 2},
                 {"matrix": [2, 4], "x": 4, "y": 2},
-                {"matrix": [2, 5], "x": 5, "y": 2},
-                {"matrix": [3, 0], "x": 0, "y": 3},
-                {"matrix": [3, 1], "x": 1, "y": 3},
-                {"matrix": [3, 2], "x": 2, "y": 3},
-                {"matrix": [3, 3], "x": 3, "y": 3},
-                {"matrix": [3, 4], "x": 4, "y": 3},
-                {"matrix": [3, 5], "x": 5, "y": 3}
+                {"matrix": [2, 5], "x": 5, "y": 2}
             ]
         }
     }
