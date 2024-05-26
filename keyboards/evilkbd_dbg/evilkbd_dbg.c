@@ -32,6 +32,17 @@ void keyboard_pre_init_kb(void) {
     keyboard_pre_init_user();
 }
 
+void matrix_scan_user(void) {
+    dprintf("Matrix scan\n");
+}
+
+void process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        uprintf("Key %u pressed\n", keycode);
+    } else {
+        uprintf("Key %u released\n", keycode);
+    }
+}
 // void i2c_init(void) {
 //     gpio_set_pin_input(GP28);
 //     gpio_set_pin_input(GP29);

@@ -3,6 +3,11 @@
 
 #pragma once
 
+#define DEBUG_ENABLE  // Enable basic debug messages
+#define CONSOLE_ENABLE  // Enable console messages
+#define DEBUG_MATRIX_SCAN_RATE  // Enable matrix scan rate debugging
+#define DEBUG_ACTION  // Enable action debugging
+
 #define I2C1_SDA_PIN GP28
 #define I2C1_SCL_PIN GP29
 #define OLED_ADDRESS 0x3C
