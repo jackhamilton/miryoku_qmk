@@ -20,16 +20,13 @@ const keypos_t PROGMEM hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
 };
 #endif
 
-void keyboard_pre_init_kb(void) {
+void keyboard_pre_init_user(void) {
     debug_enable = true;
     debug_matrix = true;
 
     dprint("Initializing I2C\n");
     i2c_init();
     dprint("I2C initialized.\n");
-
-    // Call the user-defined pre-init function
-    keyboard_pre_init_user();
 }
 
 void matrix_scan_user(void) {
