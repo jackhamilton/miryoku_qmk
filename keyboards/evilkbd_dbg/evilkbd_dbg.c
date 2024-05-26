@@ -33,7 +33,7 @@ void keyboard_pre_init_kb(void) {
 }
 
 void matrix_scan_user(void) {
-    dprintf("Matrix scan\n");
+    //dprintf("Matrix scan\n");
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
