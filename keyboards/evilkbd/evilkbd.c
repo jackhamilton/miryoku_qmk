@@ -32,15 +32,15 @@ void keyboard_pre_init_kb(void) {
     keyboard_pre_init_user();
 }
 
-// void i2c_init(void) {
-//     gpio_set_pin_input(GP28);
-//     gpio_set_pin_input(GP29);
-//     wait_ms(10);
-//
-//     palSetPadMode(GPIO, 28, PAL_MODE_ALTERNATE(4) | PAL_STM32_OTYPE_OPENDRAIN | PAL_STM32_PUPDR_PULLUP); // Set B6 to I2C function
-//     palSetPadMode(GPIO, 29, PAL_MODE_ALTERNATE(4) | PAL_STM32_OTYPE_OPENDRAIN | PAL_STM32_PUPDR_PULLUP); // Set B7 to I2C function
-// }
-//
+ void i2c_init(void) {
+     gpio_set_pin_input(GP28);
+     gpio_set_pin_input(GP29);
+     wait_ms(10);
+
+     palSetPadMode(GPIO, 28, PAL_MODE_ALTERNATE(4) | PAL_STM32_OTYPE_OPENDRAIN | PAL_STM32_PUPDR_PULLUP); // Set B6 to I2C function
+     palSetPadMode(GPIO, 29, PAL_MODE_ALTERNATE(4) | PAL_STM32_OTYPE_OPENDRAIN | PAL_STM32_PUPDR_PULLUP); // Set B7 to I2C function
+ }
+
 
 // void i2c_init(void) {
 //     // Initialize the I2C pins for the RP2040

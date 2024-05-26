@@ -4,6 +4,7 @@
 #pragma once
 
 // #define SERIAL_USART_FULL_DUPLEX
+
 #define SERIAL_USART_TX_PIN GP23
 #define SERIAL_USART_RX_PIN GP20
 #define UART_TX_PIN GP23
