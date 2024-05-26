@@ -36,13 +36,15 @@ void matrix_scan_user(void) {
     dprintf("Matrix scan\n");
 }
 
-void process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         uprintf("Key %u pressed\n", keycode);
     } else {
         uprintf("Key %u released\n", keycode);
     }
+    return true;
 }
+
 // void i2c_init(void) {
 //     gpio_set_pin_input(GP28);
 //     gpio_set_pin_input(GP29);

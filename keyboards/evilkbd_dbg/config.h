@@ -4,7 +4,6 @@
 #pragma once
 
 #define DEBUG_ENABLE  // Enable basic debug messages
-#define CONSOLE_ENABLE  // Enable console messages
 #define DEBUG_MATRIX_SCAN_RATE  // Enable matrix scan rate debugging
 #define DEBUG_ACTION  // Enable action debugging
 
