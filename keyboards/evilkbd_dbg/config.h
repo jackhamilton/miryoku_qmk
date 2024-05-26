@@ -4,7 +4,6 @@
 #pragma once
 
 #define DEBUG_ENABLE  // Enable basic debug messages
-#define DEBUG_MATRIX_SCAN_RATE  // Enable matrix scan rate debugging
 #define DEBUG_ACTION  // Enable action debugging
 
 #define I2C1_SDA_PIN GP28
