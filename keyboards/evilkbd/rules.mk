@@ -9,8 +9,6 @@ RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
 AUDIO_ENABLE = no           # Audio output
 RGB_MATRIX_ENABLE = no
 OLED_ENABLE = yes
-OLED_DRIVER = SSD1306
-OLED_DRIVER_ENABLE = yes
 I2C_DRIVER = I2CD1
 
 DYNAMIC_PIN_ENABLE = yes

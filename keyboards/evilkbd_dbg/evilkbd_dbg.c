@@ -21,25 +21,27 @@ const keypos_t PROGMEM hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
 #endif
 
 void keyboard_pre_init_user(void) {
-    debug_enable = true;
-    debug_matrix = true;
-
     dprint("Initializing I2C\n");
     i2c_init();
     dprint("I2C initialized.\n");
 }
 
+void keyboard_post_init_user(void) {
+    debug_enable = true;
+    debug_matrix = true;
+    debug_keyboard = true;
+    print ("Enabling debug logging\n")
+}
+
 void matrix_scan_user(void) {
     //dprintf("Matrix scan\n");
 }
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-        uprintf("Key %u pressed\n", keycode);
-    } else {
-        uprintf("Key %u released\n", keycode);
-    }
-    return true;
+  // If console is enabled, it will print the matrix position and status of each key pressed
+#ifdef CONSOLE_ENABLE
+    uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
+#endif
+  return true;
 }
 
 // void i2c_init(void) {
