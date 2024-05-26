@@ -20,15 +20,6 @@ const keypos_t PROGMEM hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
 };
 #endif
 
-void keyboard_post_init_user(void) {
-    debug_enable = true;
-    debug_matrix = true;
-    debug_keyboard = true;
-}
-
-void matrix_scan_user(void) {
-    //dprintf("Matrix scan\n");
-}
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // If console is enabled, it will print the matrix position and status of each key pressed
 #ifdef CONSOLE_ENABLE
