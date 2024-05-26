@@ -30,7 +30,7 @@ void keyboard_post_init_user(void) {
     debug_enable = true;
     debug_matrix = true;
     debug_keyboard = true;
-    print ("Enabling debug logging\n")
+    print ("Enabling debug logging\n");
 }
 
 void matrix_scan_user(void) {
