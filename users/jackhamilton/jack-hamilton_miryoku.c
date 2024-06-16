@@ -5,7 +5,7 @@
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdint.h>
-#include "features/achordion.h"
+//#include "features/achordion.h"
 #include QMK_KEYBOARD_H
 
 #ifdef OS_DETECTION_ENABLE
@@ -102,9 +102,9 @@ const struct os_keybind keybinds[] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_achordion(keycode, record)) {
-        return false;
-    }
+    // if (!process_achordion(keycode, record)) {
+    //     return false;
+    // }
     os_variant_t detected_os = detected_host_os();
     size_t size = sizeof(keybinds) / sizeof(keybinds[0]);
     for (int i = 0; i < size; i += 1) {
@@ -159,20 +159,20 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 //  }
 //}
 
-void matrix_scan_user(void) {
-    achordion_task();
-}
-
-bool achordion_chord(uint16_t tap_hold_keycode,
-                     keyrecord_t* tap_hold_record,
-                     uint16_t other_keycode,
-                     keyrecord_t* other_record) {
-    if (other_record->event.key.row % (MATRIX_ROWS / 2) >= 3) {
-        return true;
-    }
-
-    return achordion_opposite_hands(tap_hold_record, other_record);
-}
+// void matrix_scan_user(void) {
+//     achordion_task();
+// }
+//
+// bool achordion_chord(uint16_t tap_hold_keycode,
+//                      keyrecord_t* tap_hold_record,
+//                      uint16_t other_keycode,
+//                      keyrecord_t* other_record) {
+//     if (other_record->event.key.row % (MATRIX_ROWS / 2) >= 3) {
+//         return true;
+//     }
+//
+//     return achordion_opposite_hands(tap_hold_record, other_record);
+// }
 
 enum layers { BASE, EXTRA, TAP, BUTTON, NAV, /* MOUSE, */MEDIA, NUM, SYM, FUN };
 
