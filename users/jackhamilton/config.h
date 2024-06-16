@@ -17,9 +17,8 @@
 #define QUICK_TAP_TERM 0
 
 #define PERMISSIVE_HOLD_PER_KEY
-//#define ACHORDION_STREAK
 
-
+#define ACHORDION_STREAK
 // Auto Shift
 // #define NO_AUTO_SHIFT_ALPHA
 // #define AUTO_SHIFT_TIMEOUT TAPPING_TERM
