@@ -16,6 +16,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * └───┴───┴───┴───┴───┴───┘
      */
     [0] = LAYOUT_ortho_4x6(
+        KC_Q,    KC_Q,    KC_Q,    KC_Q,    KC_Q,    KC_Q,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,
         KC_BSPC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,
@@ -81,13 +82,13 @@ void render_keylogger_status(void) {
     oled_write(keylog_str, false);
 }
 
-void render_keylock_status(uint8_t led_usb_state) {
-    oled_write_P(PSTR("Lock:"), false);
-    oled_write_P(PSTR(" "), false);
-    oled_write_P(PSTR("N"), led_usb_state & (1 << USB_LED_NUM_LOCK));
-    oled_write_P(PSTR("C"), led_usb_state & (1 << USB_LED_CAPS_LOCK));
-    oled_write_ln_P(PSTR("S"), led_usb_state & (1 << USB_LED_SCROLL_LOCK));
-}
+//void render_keylock_status(uint8_t led_usb_state) {
+//    oled_write_P(PSTR("Lock:"), false);
+//    oled_write_P(PSTR(" "), false);
+//    oled_write_P(PSTR("N"), led_usb_state & (1 << USB_LED_NUM_LOCK));
+//    oled_write_P(PSTR("C"), led_usb_state & (1 << USB_LED_CAPS_LOCK));
+//    oled_write_ln_P(PSTR("S"), led_usb_state & (1 << USB_LED_SCROLL_LOCK));
+//}
 
 void render_mod_status(uint8_t modifiers) {
     oled_write_P(PSTR("Mods:"), false);
@@ -116,7 +117,7 @@ void render_bootmagic_status(void) {
 
 void render_status_main(void) {
     /* Show Keyboard Layout  */
-    render_keylock_status(host_keyboard_leds());
+    //render_keylock_status(host_keyboard_leds());
     render_mod_status(get_mods());
     render_bootmagic_status();
 
