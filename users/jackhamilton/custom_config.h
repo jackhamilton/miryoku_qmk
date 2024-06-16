@@ -56,7 +56,7 @@ U_NP,              U_NP,              U_NA,              U_NA,              U_NA
 KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              TD(U_TD_U_BASE),   TD(U_TD_U_EXTRA),  KC_O,              KC_P,              \
 KC_A,              KC_S,              KC_D,              KC_F,              KC_G,              KC_H,              KC_J,              KC_K,              KC_L,              KC_QUOT,           \
 KC_Z,              KC_X,              KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_COMM,           KC_DOT,            KC_SLSH,           \
-U_NP,              U_NP,              LT(U_NUM,KC_ESC),  KC_SPC,            KC_TAB,            KC_LALT,           LT(U_NAV,KC_BSPC), LT(U_FUN,KC_DEL),  U_NP,              U_NP
+U_NP,              U_NP,              LT(U_NUM,KC_ESC),  KC_SPC,            KC_TAB,            KC_LALT,           LT(U_NUM,KC_BSPC), LT(U_FUN,KC_DEL),  U_NP,              U_NP
 
 #define MIRYOKU_LAYER_SYM \
 KC_LCBR,           KC_AMPR,           KC_ASTR,           KC_LPRN,           KC_RCBR,           U_NA,              TD(U_TD_U_BASE),   TD(U_TD_U_EXTRA),  TD(U_TD_U_TAP),    TD(U_TD_BOOT),     \
