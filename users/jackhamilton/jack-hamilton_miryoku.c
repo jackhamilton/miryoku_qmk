@@ -5,11 +5,11 @@
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdint.h>
-//#include "features/achordion.h"
+// #include "features/achordion.h"
 #include QMK_KEYBOARD_H
 
 #ifdef OS_DETECTION_ENABLE
-  #include "os_detection.h"
+#    include "os_detection.h"
 #endif
 
 #include "jack-hamilton_miryoku.h"
@@ -61,52 +61,46 @@ const key_override_t capsword_key_override = ko_make_basic(MOD_MASK_SHIFT, CW_TO
 const key_override_t **key_overrides = (const key_override_t *[]){&capsword_key_override, NULL};
 
 // JACK HAMILTON CUSTOMIZATION LAYER
-//const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+// const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
 //    {19, 3, HSV_RED},       // Light 4 LEDs, starting with LED 6
 //    {40, 3, HSV_RED}       // Light 4 LEDs, starting with LED 12
 //);
 //// Light LEDs 9 & 10 in cyan when keyboard layer 1 is active
-//const rgblight_segment_t PROGMEM my_colemak_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-//    {1, 18, HSV_CYAN},
-//    {22, 18, HSV_CYAN}
+// const rgblight_segment_t PROGMEM my_colemak_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+//     {1, 18, HSV_CYAN},
+//     {22, 18, HSV_CYAN}
 //);
 //// Light LEDs 11 & 12 in purple when keyboard layer 2 is active
-//const rgblight_segment_t PROGMEM my_qwerty_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-//    {1, 18, HSV_YELLOW},
-//    {22, 18, HSV_YELLOW}
+// const rgblight_segment_t PROGMEM my_qwerty_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+//     {1, 18, HSV_YELLOW},
+//     {22, 18, HSV_YELLOW}
 //);
 //
-//const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
-//    my_capslock_layer,
-//    my_colemak_layer,    // Overrides caps lock layer
-//    my_qwerty_layer    // Overrides other layers
+// const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+//     my_capslock_layer,
+//     my_colemak_layer,    // Overrides caps lock layer
+//     my_qwerty_layer    // Overrides other layers
 //);
 //
-//void keyboard_post_init_user(void) {
-//    // Enable the LED layers
-//    rgblight_layers = my_rgb_layers;
-//}
+// void keyboard_post_init_user(void) {
+//     // Enable the LED layers
+//     rgblight_layers = my_rgb_layers;
+// }
 
 struct os_keybind {
-    int keycode;
-    char* macBind;
-    char* normalBind;
+    int   keycode;
+    char *macBind;
+    char *normalBind;
 };
 
-const struct os_keybind keybinds[] = {
-    { KC_AGIN, SS_LCMD("y"), SS_LCTL("y") },
-    { KC_PSTE, SS_LCMD("v"), SS_LCTL("v") },
-    { KC_COPY, SS_LCMD("c"), SS_LCTL("c") },
-    { KC_CUT,  SS_LCMD("x"), SS_LCTL("x") },
-    { KC_UNDO, SS_LCMD("z"), SS_LCTL("z") }
-};
+const struct os_keybind keybinds[] = {{KC_AGIN, SS_LCMD("y"), SS_LCTL("y")}, {KC_PSTE, SS_LCMD("v"), SS_LCTL("v")}, {KC_COPY, SS_LCMD("c"), SS_LCTL("c")}, {KC_CUT, SS_LCMD("x"), SS_LCTL("x")}, {KC_UNDO, SS_LCMD("z"), SS_LCTL("z")}};
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // if (!process_achordion(keycode, record)) {
     //     return false;
     // }
     os_variant_t detected_os = detected_host_os();
-    size_t size = sizeof(keybinds) / sizeof(keybinds[0]);
+    size_t       size        = sizeof(keybinds) / sizeof(keybinds[0]);
     for (int i = 0; i < size; i += 1) {
         struct os_keybind current = keybinds[i];
         if (keycode == current.keycode) {
@@ -131,6 +125,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+            // colemak
+        case LALT_T(KC_R):
+        case LCTL_T(KC_S):
+        case LSFT_T(KC_T):
+        case LSFT_T(KC_N):
+        case LCTL_T(KC_E):
+        case LALT_T(KC_I):
+        case LGUI_T(KC_O):
+            // qwerty
         case LGUI_T(KC_A):
         case LALT_T(KC_S):
         case LCTL_T(KC_D):
@@ -145,19 +148,19 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-//uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t* record) {
-//  // If you quickly hold a tap-hold key after tapping it, the tap action is
-//  // repeated. Key repeating is useful e.g. for Vim navigation keys, but can
-//  // lead to missed triggers in fast typing. Here, returning 0 means we
-//  // instead want to "force hold" and disable key repeating.
-//  switch (keycode) {
-//    case LT(U_MOUSE,KC_TAB):
-//    case LT(U_NAV,KC_SPACE):
-//      return QUICK_TAP_TERM;  // Enable key repeating.
-//    default:
-//      return 0;  // Otherwise, force hold and disable key repeating.
-//  }
-//}
+// uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t* record) {
+//   // If you quickly hold a tap-hold key after tapping it, the tap action is
+//   // repeated. Key repeating is useful e.g. for Vim navigation keys, but can
+//   // lead to missed triggers in fast typing. Here, returning 0 means we
+//   // instead want to "force hold" and disable key repeating.
+//   switch (keycode) {
+//     case LT(U_MOUSE,KC_TAB):
+//     case LT(U_NAV,KC_SPACE):
+//       return QUICK_TAP_TERM;  // Enable key repeating.
+//     default:
+//       return 0;  // Otherwise, force hold and disable key repeating.
+//   }
+// }
 
 // void matrix_scan_user(void) {
 //     achordion_task();
@@ -174,7 +177,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 //     return achordion_opposite_hands(tap_hold_record, other_record);
 // }
 
-enum layers { BASE, EXTRA, TAP, BUTTON, NAV, /* MOUSE, */MEDIA, NUM, SYM, FUN };
+enum layers { BASE, EXTRA, TAP, BUTTON, NAV, /* MOUSE, */ MEDIA, NUM, SYM, FUN };
 
 #define COLEMAK 1
 #define QWERTY 2
@@ -267,9 +270,9 @@ bool render_status(void) {
         case NAV:
             oled_write_P(PSTR("NAV"), false);
             break;
-//         case MOUSE:
-//             oled_write_P(PSTR("MOUSE"), false);
-//             break;
+            //         case MOUSE:
+            //             oled_write_P(PSTR("MOUSE"), false);
+            //             break;
         case SYM:
             oled_write_P(PSTR("SYM"), false);
             break;
@@ -279,13 +282,11 @@ bool render_status(void) {
         case FUN:
             oled_write_P(PSTR("FUN"), false);
             break;
-        default:
-        {
+        default: {
             char str[8];
             sprintf(str, "%d:%d", tapDanceLayer, get_highest_layer(layer_state));
             oled_write(str, false);
-        }
-            break;
+        } break;
     }
 
     os_variant_t detected_os = detected_host_os();
@@ -312,7 +313,7 @@ bool render_status(void) {
     oled_write_P(led_state.caps_lock || is_caps_word_on() ? PSTR("CAP ") : PSTR("    "), false);
     oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
 
-return false;
+    return false;
 }
 
 static void render_logo(void) {
