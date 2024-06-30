@@ -126,22 +126,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
             // colemak
-        case LALT_T(KC_R):
-        case LCTL_T(KC_S):
         case LSFT_T(KC_T):
         case LSFT_T(KC_N):
-        case LCTL_T(KC_E):
-        case LALT_T(KC_I):
-        case LGUI_T(KC_O):
             // qwerty
-        case LGUI_T(KC_A):
-        case LALT_T(KC_S):
-        case LCTL_T(KC_D):
         case LSFT_T(KC_F):
         case LSFT_T(KC_J):
-        case LCTL_T(KC_K):
-        case LALT_T(KC_L):
-        case LGUI_T(KC_QUOT):
             return true;
         default:
             return false;
